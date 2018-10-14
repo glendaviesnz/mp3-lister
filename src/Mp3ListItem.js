@@ -6,6 +6,7 @@ const title = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 4px;
 `;
 
 const speaker = css`
@@ -13,10 +14,12 @@ const speaker = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 4px;
 `;
 
 const date = css`
   width: 20%;
+  padding: 4px;
 `;
 
 

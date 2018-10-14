@@ -11,6 +11,25 @@ const mp3ListTable = css`
   margin: auto
 `;
 
+const tableHeader = css`
+  text-align: left;
+`;
+
+const title = css`
+  width: 60%;
+  padding: 4px;
+`;
+
+const speaker = css`
+  width: 20%;
+  padding: 4px;
+`;
+
+const date = css`
+  width: 20%;
+  padding: 4px;
+`;
+
 class Mp3List extends Component {
   state = { mp3List: [] }
 
@@ -26,7 +45,12 @@ class Mp3List extends Component {
       return <Mp3ListItem key={mp3.id} mp3={mp3} />;
     })
 
-    return <table className={mp3ListTable}><tbody>{mp3List}</tbody></table>;
+    return <table className={mp3ListTable}>
+    <tbody>
+      <tr className={tableHeader}><th className={title}>Title</th><th className={speaker}>Speaker</th><th className={date}>Created</th></tr>
+      
+      {mp3List}
+    </tbody></table>;
   }
 }
 
