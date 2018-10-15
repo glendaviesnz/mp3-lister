@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from 'react-emotion';
+import { Link } from "react-router-dom";
 
 const title = css`
   width: 60%;
@@ -27,7 +28,7 @@ const Mp3ListItem = ({mp3}) => {
     console.log(mp3);
     return (
     <tr>
-      <td className={title}>{ mp3.title }</td>
+      <td className={title}><Link to={`/details/${mp3.id}`}>{ mp3.title }</Link></td>
       <td className={speaker}>{ mp3.speaker }</td>
       <td className={date}>{ formatDate(mp3.date_entered ) }</td>
     </tr>
