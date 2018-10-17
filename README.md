@@ -1,2 +1,2 @@
 # mp3-lister
-A simple front end app for listing mp3 recordings
+A simple front end app for listing mp3 recordings - just a very rough work in progress at the moment - nothing to see here ....
