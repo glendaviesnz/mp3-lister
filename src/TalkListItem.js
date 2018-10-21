@@ -24,18 +24,18 @@ const date = css`
 `;
 
 
-const Mp3ListItem = ({mp3}) => {
-    console.log(mp3);
+const TalkListItem = ({Talk}) => {
+    console.log(Talk);
     return (
     <tr>
-      <td className={title}><Link to={`/details/${mp3.id}`}>{ mp3.title }</Link></td>
-      <td className={speaker}>{ mp3.speaker }</td>
-      <td className={date}>{ formatDate(mp3.date_entered ) }</td>
+      <td className={title}><Link to={`/details/${Talk.id}`}>{ Talk.title }</Link></td>
+      <td className={speaker}>{ Talk.speaker }</td>
+      <td className={date}>{ formatDate(Talk.date_entered ) }</td>
     </tr>
   );
 };
 
-export default Mp3ListItem;
+export default TalkListItem;
 
 function formatDate(date)  {
 
