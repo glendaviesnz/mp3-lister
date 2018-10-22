@@ -3,6 +3,8 @@ import * as axios from 'axios';
 import { css } from 'react-emotion';
 
 import TalkListItem from './TalkListItem';
+import MobilePager from './MobilePager';
+import DesktopPager from './DesktopPager';
 import { config } from './config';
 
 const list = css`
@@ -12,8 +14,25 @@ const list = css`
 `;
 
 class TalkList extends Component {
-  state = { talkList: [] }
-
+  state = {
+    talkList: [],
+    startIndex: 0,
+    endIndex: 10
+  }
+  loadMore = e => {
+    console.log(e);
+    this.setState({
+      startIndex: 0,
+      endIndex: e
+    }
+    );
+  }
+  loadNextPage = (startIndex, endIndex) => {
+    this.setState({
+      startIndex,
+      endIndex
+    });
+  }
   componentDidMount() {
     axios.get(config.apiUrl)
       .then(response => {
@@ -22,13 +41,19 @@ class TalkList extends Component {
   }
 
   render() {
-    var talkList = this.state.talkList.map(function (talk) {
-      return <TalkListItem key={talk.id} Talk={talk} />;
-    })
+    var talkList = this.state.talkList
+      .slice(this.state.startIndex, this.state.endIndex)
+      .map(function (talk) {
+        return <TalkListItem key={talk.id} Talk={talk} />;
+      })
 
-    return <ul className={list}>
-      {talkList}
-    </ul>
+    return <div>
+      <ul className={list}>
+        {talkList}
+      </ul>
+      <DesktopPager startIndex={this.state.startIndex} endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></DesktopPager>
+      <MobilePager endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></MobilePager>
+    </div>
   }
 }
 

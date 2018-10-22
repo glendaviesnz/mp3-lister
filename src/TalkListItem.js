@@ -18,6 +18,8 @@ const talkListItem = css`
     grid-template-columns: 2fr 1fr 1fr;
     border: 0px;
     border-radius: 0px;
+    padding: 4px;
+    grid-gap: 4px;
   }
 `;
 const title = css`
