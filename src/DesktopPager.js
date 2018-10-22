@@ -8,9 +8,12 @@ const desktopPager = css`
   }
 `;
 
-const DesktopPager = ({ loadNextPage, startIndex, endIndex }) => {
+const DesktopPager = ({ loadNextPage, startIndex, endIndex, total }) => {
 
     const handleLoadMore = () => {
+        if (startIndex === 0 && endIndex > 10) {
+            startIndex = endIndex - 10;
+        }
         loadNextPage(startIndex + 10, endIndex + 10)
     }
 

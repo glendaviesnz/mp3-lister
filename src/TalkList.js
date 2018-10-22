@@ -3,6 +3,7 @@ import * as axios from 'axios';
 import { css } from 'react-emotion';
 
 import TalkListItem from './TalkListItem';
+import TalkListHeader from './TalkListHeader';
 import MobilePager from './MobilePager';
 import DesktopPager from './DesktopPager';
 import { config } from './config';
@@ -10,7 +11,7 @@ import { config } from './config';
 const list = css`
   max-width: 1200px;
   padding: 24px;
-  margin: auto
+  margin: auto;
 `;
 
 class TalkList extends Component {
@@ -49,9 +50,10 @@ class TalkList extends Component {
 
     return <div>
       <ul className={list}>
+      <TalkListHeader />
         {talkList}
       </ul>
-      <DesktopPager startIndex={this.state.startIndex} endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></DesktopPager>
+      <DesktopPager total={this.state.talkList.length} startIndex={this.state.startIndex} endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></DesktopPager>
       <MobilePager endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></MobilePager>
     </div>
   }
