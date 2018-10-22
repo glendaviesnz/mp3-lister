@@ -21,12 +21,10 @@ const speaker = css`
   font-weight: 600;
 `;
 
-
 const date = css`
   font-weight: 600;
   text-align: right;
 `;
-
 
 const TalkListHeader = () => {
   return (

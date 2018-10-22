@@ -28,7 +28,7 @@ class TalkList extends Component {
     }
     );
   }
-  loadNextPage = (startIndex, endIndex) => {
+  loadPage = (startIndex, endIndex) => {
     this.setState({
       startIndex,
       endIndex
@@ -42,19 +42,29 @@ class TalkList extends Component {
   }
 
   render() {
-    var talkList = this.state.talkList
+    const talkList = this.state.talkList
       .slice(this.state.startIndex, this.state.endIndex)
       .map(function (talk) {
         return <TalkListItem key={talk.id} Talk={talk} />;
       })
 
+    const totalTalks = this.state.talkList.length;
+
     return <div>
       <ul className={list}>
-      <TalkListHeader />
+        <TalkListHeader />
         {talkList}
       </ul>
-      <DesktopPager total={this.state.talkList.length} startIndex={this.state.startIndex} endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></DesktopPager>
-      <MobilePager endIndex={this.state.endIndex} loadNextPage={this.loadNextPage} ></MobilePager>
+      <DesktopPager
+        total={totalTalks}
+        startIndex={this.state.startIndex}
+        endIndex={this.state.endIndex}
+        loadPage={this.loadPage} ></DesktopPager>
+
+      <MobilePager
+        total={totalTalks}
+        endIndex={this.state.endIndex}
+        loadPage={this.loadPage} ></MobilePager>
     </div>
   }
 }

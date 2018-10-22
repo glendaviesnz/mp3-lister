@@ -9,13 +9,14 @@ const mobilePager = css`
   }
 `;
 
-const MobilePager = ({ loadNextPage, endIndex }) => {
+const MobilePager = ({ loadPage, endIndex, total }) => {
 
     const handleLoadMore = () => {
-        loadNextPage(0, endIndex + 10)
+        loadPage(0, endIndex + 10)
     }
 
     return (
+      endIndex + 10 <= total && 
       <div onClick={handleLoadMore} className={mobilePager}>
             Load more
       </div>
