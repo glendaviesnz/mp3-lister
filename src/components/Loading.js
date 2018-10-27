@@ -18,10 +18,11 @@ const ripple = keyframes`
   }
 `
 const loading = css`
-  display: inline-block;
+  display: block;
   position: relative;
-  width: 64px;
   height: 64px;
+  width: 64px;
+  margin: auto;
   & div {
     position: absolute;
     border: 4px solid #ccc;

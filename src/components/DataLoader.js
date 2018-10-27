@@ -1,37 +1,28 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as axios from 'axios';
 
 import Loading from './Loading';
 import { config } from '../config';
 
-class DataLoader extends Component {
-    state = {
-        loading: false,
-        data: null
-    }
-    loadData = e => {
-        console.log(e);
-        this.setState({
-            startIndex: 0,
-            endIndex: e
-        }
-        );
-    }
+const DataLoader = ({ render }) => {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    componentDidMount() {
-        this.setState({ loading: true });
+    useEffect(() => {
+        setLoading(true);
         axios.get(config.apiUrl)
             .then(response => {
-                this.setState({ data: response.data, loading: false })
+                setLoading(false);
+                setData(response.data);
             });
-    }
+    });
 
-    render() {
-        if (this.state.loading) {
-            return <Loading />
-        }
-        return this.props.render(this.state.data)
+
+    if (loading) {
+        return <Loading />
     }
+    return render(data)
+
 }
 
 export default DataLoader;

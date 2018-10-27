@@ -6,6 +6,7 @@ import TalkListItem from './TalkListItem';
 import TalkListHeader from './TalkListHeader';
 import MobilePager from './MobilePager';
 import DesktopPager from './DesktopPager';
+import Loading from './Loading';
 import { config } from '../config';
 
 const list = css`
@@ -19,12 +20,6 @@ const TalkList = () => {
   const [talkList, setTalkList] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(10);
-
-  // const loadMore = e => {
-  //   console.log(e);
-  //   setStartIndex(0);
-  //   setEndIndex(e);
-  // }
 
   const loadPage = (startIndex, endIndex) => {
     setStartIndex(startIndex);
@@ -45,7 +40,9 @@ const TalkList = () => {
     });
 
   const totalTalks = talkList.length;
-
+  if (talkList.length === 0) {
+    return <Loading />
+  }
   return (<div>
     <ul className={list}>
       <TalkListHeader />
