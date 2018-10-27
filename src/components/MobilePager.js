@@ -12,6 +12,7 @@ const mobilePager = css`
 const MobilePager = ({ loadPage, endIndex, total }) => {
 
     const handleLoadMore = () => {
+      console.log(endIndex);
         loadPage(0, endIndex + 10)
     }
 

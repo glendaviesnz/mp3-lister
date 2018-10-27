@@ -3,8 +3,8 @@ import { css } from 'react-emotion';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import './App.css';
-import TalkList from './TalkList';
-import TalkDetails from './TalkDetails';
+import TalkList from './components/TalkList';
+import TalkDetails from './components/TalkDetails';
 import { config } from './config'
 
 const appHeading = css`
@@ -15,7 +15,7 @@ const appHeading = css`
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router basename={'/cbt'}>
         <div className="App">
           <h1 className={appHeading}>{config.appName}</h1>
           <Route exact path="/" component={TalkList} />

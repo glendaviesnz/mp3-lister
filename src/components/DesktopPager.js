@@ -11,6 +11,10 @@ const pagingBar = css`
 
 const jumpTo = css`
   padding: 0 8px;
+  cursor: pointer;
+  &:hover {
+      background-color: grey;
+  }
 `;
 
 const currentPage = css`
@@ -48,7 +52,7 @@ const DesktopPager = ({ loadPage, startIndex, endIndex, total }) => {
 
     const next = endIndex + 10 <= total && <div onClick={handleLoadNext}>Next</div>
     const previous = endIndex > 10 && <div onClick={handleLoadPrevious}>Previous</div>
-    const jumpToLinks = range(0, 10).map((num) => {
+    const jumpToLinks = range(0, total/10).map((num) => {
         const style = (endIndex / 10 === num + 1) ? currentPage : jumpTo;
         return <div onClick={handleJumpTo(num)} className={style} key={num}>{num + 1}</div>;
     })
