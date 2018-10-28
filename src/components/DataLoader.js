@@ -19,11 +19,16 @@ class DataLoader extends Component {
     }
 
     componentDidMount() {
-        this.setState({ loading: true });
-        axios.get(`${config.apiUrl}${this.props.path}`)
-            .then(response => {
-                this.setState({ data: response.data, loading: false })
-            });
+        if (this.props.talkState.talkList.length === 0) {
+            this.setState({ loading: true });
+            axios.get(`${config.apiUrl}${this.props.path}`)
+                .then(response => {
+                    this.props.talkState.updateTalkList(response.data)
+                    this.setState({ loading: false });
+                });
+        } else {
+            this.setState({ loading: false });
+        }
     }
 
     render() {
@@ -31,8 +36,8 @@ class DataLoader extends Component {
             return <Loading />
         }
 
-        return this.props.render({ 
-            data: this.state.data, 
+        return this.props.render({
+            data: this.props.talkState.talkList,
             startIndex: this.state.startIndex,
             endIndex: this.state.endIndex,
             loadPage: this.loadPage,

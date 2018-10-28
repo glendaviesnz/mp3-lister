@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import TalkList from './components/TalkList';
 import TalkDetails from './components/TalkDetails';
+import TalkStore from './components/TalkStore';
 import { config } from './config'
 
 const appHeading = css`
@@ -18,8 +19,10 @@ class App extends Component {
       <Router basename={'/cbt'}>
         <div className="App">
           <h1 className={appHeading}>{config.appName}</h1>
-          <Route exact path="/" component={TalkList} />
-          <Route path="/details/:id" component={TalkDetails} />
+          <TalkStore>
+            <Route exact path="/" component={TalkList} />
+            <Route path="/details/:id" component={TalkDetails} />
+          </TalkStore>
         </div>
       </Router>
     );
