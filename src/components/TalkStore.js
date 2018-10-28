@@ -4,18 +4,30 @@ export const TalkContext = React.createContext();
 
 class TalkStore extends React.Component {
     state = {
-      talkList: []
+      talkList: [],
+      startIndex: 0,
+      endIndex: 10
     };
 
     updateTalkList = (talkList) => {
         this.setState({talkList})
     }
 
+    loadPage = (startIndex, endIndex) => {
+        this.setState({
+            startIndex: startIndex,
+            endIndex: endIndex
+        });
+    }
+
     render() {
       return (
         <TalkContext.Provider value={{
-            talkList: this.state.talkList,
-            updateTalkList: this.updateTalkList
+            list: this.state.talkList,
+            startIndex: this.state.startIndex,
+            endIndex: this.state.endIndex,
+            updateList: this.updateTalkList,
+            loadPage: this.loadPage
             }}>
           {this.props.children}
         </TalkContext.Provider>
@@ -24,4 +36,3 @@ class TalkStore extends React.Component {
   }
 
   export default TalkStore;
-  

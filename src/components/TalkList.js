@@ -5,34 +5,33 @@ import TalkListItem from './TalkListItem';
 import TalkListHeader from './TalkListHeader';
 import MobilePager from './MobilePager';
 import DesktopPager from './DesktopPager';
-import DataLoader from './DataLoader';
+import ListLoader from './ListLoader';
 import { TalkContext } from './TalkStore';
+import { config } from '../config';
 
-const list = css`
+const listWrapper = css`
   max-width: 1200px;
   padding: 24px;
   margin: auto;
 `;
 
-const apiPath = '/studies/list?params={%22where%22:{%22approved%22:2},%22orderBy%22:%22date_entered%22,%22order%22:%22DESC%22,%22offset%22:0,%22count%22:100}';
-
-const talkList = ({ data, loadPage, startIndex, endIndex }) => (
+const talkList = ({ list, loadPage, startIndex, endIndex }) => (
   <div>
-    <ul className={list}>
+    <ul className={listWrapper}>
       <TalkListHeader />
-      {data.slice(startIndex, endIndex)
+      {list.slice(startIndex, endIndex)
         .map((talk) => (
           <TalkListItem key={talk.id} talk={talk} />
         ))}
     </ul>
     <DesktopPager
-      total={100}
+      total={list.length}
       startIndex={startIndex}
       endIndex={endIndex}
       loadPage={loadPage} ></DesktopPager>
 
     <MobilePager
-      total={100}
+      total={list.length}
       endIndex={endIndex}
       loadPage={loadPage} ></MobilePager>
   </div>
@@ -41,7 +40,7 @@ const talkList = ({ data, loadPage, startIndex, endIndex }) => (
 const TalkList = () => (
   <TalkContext.Consumer>
     {talkState => (
-      <DataLoader talkState={talkState} path={apiPath} render={talkList} />
+      <ListLoader listState={talkState} path={config.latestTalks} render={talkList} />
     )}
   </TalkContext.Consumer>
 );
