@@ -47,15 +47,13 @@ const date = css`
     text-align: right;
 `;
 
-
-const TalkListItem = ({ Talk }) => {
-  // console.log(Talk);
+const TalkListItem = ({ talk }) => {
   return (
-    <Link to={`/details/${Talk.id}`} className={talkLink}>
+    <Link to={`/details/${talk.id}`} className={talkLink}>
     <div className={talkListItem}>
-      <div className={title}>{Talk.title}</div>
-      <div className={speaker}>{Talk.speaker}</div>
-      <div className={date}>{formatDate(Talk.date_entered)}</div>
+      <div className={title}>{talk.title}</div>
+      <div className={speaker}>{talk.speaker}</div>
+      <div className={date}>{formatDate(talk.date_entered)}</div>
     </div>
     </Link>
   );

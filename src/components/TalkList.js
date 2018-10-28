@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import * as axios from 'axios';
+import React from 'react';
 import { css } from 'react-emotion';
 
 import TalkListItem from './TalkListItem';
 import TalkListHeader from './TalkListHeader';
 import MobilePager from './MobilePager';
 import DesktopPager from './DesktopPager';
-import Loading from './Loading';
-import { config } from '../config';
+import DataLoader from './DataLoader';
 
 const list = css`
   max-width: 1200px;
@@ -17,48 +15,27 @@ const list = css`
 
 const TalkList = () => {
 
-  const [talkList, setTalkList] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(10);
+  const apiPath = '/studies/list?params={%22where%22:{%22approved%22:2},%22orderBy%22:%22date_entered%22,%22order%22:%22DESC%22,%22offset%22:0,%22count%22:100}';
 
-  const loadPage = (startIndex, endIndex) => {
-    setStartIndex(startIndex);
-    setEndIndex(endIndex);
-  }
-
-  useEffect(() => {
-    axios.get(config.apiUrl)
-      .then(response => {
-        setTalkList(response.data);
-      });
-  });
-
-  const talkListSlice = talkList
-    .slice(startIndex, endIndex)
-    .map(function (talk) {
-      return <TalkListItem key={talk.id} Talk={talk} />;
-    });
-
-  const totalTalks = talkList.length;
-  if (talkList.length === 0) {
-    return <Loading />
-  }
-  return (<div>
+  return (<DataLoader path={apiPath} render={({data, loadPage, startIndex, endIndex}) => (<div>
     <ul className={list}>
       <TalkListHeader />
-      {talkListSlice}
+      {data.slice(startIndex, endIndex)
+    .map( (talk) => (
+      <TalkListItem key={talk.id} talk={talk} />
+    ))}
     </ul>
     <DesktopPager
-      total={totalTalks}
+      total={100}
       startIndex={startIndex}
       endIndex={endIndex}
       loadPage={loadPage} ></DesktopPager>
 
     <MobilePager
-      total={totalTalks}
+      total={100}
       endIndex={endIndex}
       loadPage={loadPage} ></MobilePager>
-  </div>)
+  </div>)} />)
 }
 
 export default TalkList;
