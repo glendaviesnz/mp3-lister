@@ -1,43 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as axios from 'axios';
 
 import Loading from './Loading';
 import { config } from '../config';
 
-class ListLoader extends Component {
-    
-    state = {
-        loading: true
-    }
+const ListLoader = ({ listState: { list, updateList, startIndex, endIndex, loadPage }, render, path }) => {
+    const [loading, setLoading] = useState(true);
 
-    componentDidMount() {
-        const {listState: {list, updateList}, path} = this.props;
-
+    useEffect(() => {
         if (list.length === 0) {
-            this.setState({ loading: true });
+            setLoading(true);
             axios.get(`${config.apiUrl}${path}`)
                 .then(response => {
                     updateList(response.data)
-                    this.setState({ loading: false });
+                    setLoading(false);
                 });
         } else {
-            this.setState({ loading: false });
+            setLoading(false);
         }
+    }, []);
+
+    if (loading) {
+        return <Loading />
     }
 
-    render() {
-        const {listState: {list, startIndex, endIndex, loadPage} } = this.props;
-        if (this.state.loading) {
-            return <Loading />
-        }
-
-        return this.props.render({
-            list,
-            startIndex,
-            endIndex,
-            loadPage,
-        });
-    }
+    return render({
+        list,
+        startIndex,
+        endIndex,
+        loadPage,
+    });
 }
 
 export default ListLoader;

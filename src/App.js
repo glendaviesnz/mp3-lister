@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { css } from 'react-emotion';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -13,20 +13,18 @@ const appHeading = css`
   margin: auto
 `;
 
-class App extends Component {
-  render() {
-    return (
-      <Router basename={'/cbt'}>
-        <div className="App">
-          <h1 className={appHeading}>{config.appName}</h1>
-          <TalkStore>
-            <Route exact path="/" component={TalkList} />
-            <Route path="/details/:id" component={TalkDetails} />
-          </TalkStore>
-        </div>
-      </Router>
-    );
-  }
+const App = () => {
+  return (
+    <Router basename={'/cbt'}>
+      <div className="App">
+        <h1 className={appHeading}>{config.appName}</h1>
+        <TalkStore>
+          <Route exact path="/" component={TalkList} />
+          <Route path="/details/:id" component={TalkDetails} />
+        </TalkStore>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

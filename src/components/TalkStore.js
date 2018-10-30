@@ -1,38 +1,33 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
 export const TalkContext = React.createContext();
 
-class TalkStore extends React.Component {
-    state = {
-      talkList: [],
-      startIndex: 0,
-      endIndex: 10
-    };
+const TalkStore = ({children}) => {
+  const [talkList, setTalkList] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(10);
 
-    updateTalkList = (talkList) => {
-        this.setState({talkList})
-    }
-
-    loadPage = (startIndex, endIndex) => {
-        this.setState({
-            startIndex: startIndex,
-            endIndex: endIndex
-        });
-    }
-
-    render() {
-      return (
-        <TalkContext.Provider value={{
-            list: this.state.talkList,
-            startIndex: this.state.startIndex,
-            endIndex: this.state.endIndex,
-            updateList: this.updateTalkList,
-            loadPage: this.loadPage
-            }}>
-          {this.props.children}
-        </TalkContext.Provider>
-      );
-    }
+  const updateTalkList = (talkList) => {
+    setTalkList(talkList);
   }
 
-  export default TalkStore;
+  const loadPage = (startIndex, endIndex) => {
+    setStartIndex(startIndex);
+    setEndIndex(endIndex);
+  }
+
+  return (
+    <TalkContext.Provider value={{
+      list: talkList,
+      startIndex: startIndex,
+      endIndex: endIndex,
+      updateList: updateTalkList,
+      loadPage: loadPage
+    }}>
+      {children}
+    </TalkContext.Provider>
+  );
+
+}
+
+export default TalkStore;
